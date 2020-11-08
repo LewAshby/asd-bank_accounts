@@ -1,6 +1,8 @@
 package it.unical.inf.asd.bankaccounts;
 
 
+import it.unical.inf.asd.bankaccounts.data.dao.TitoloDao;
+import it.unical.inf.asd.bankaccounts.data.dao.UnitSpecification;
 import it.unical.inf.asd.bankaccounts.data.entities.Titolo;
 import it.unical.inf.asd.bankaccounts.data.services.TitoloService;
 import org.junit.Assert;
@@ -21,20 +23,23 @@ public class AllTests {
     @Autowired
     private TitoloService titoloService;
 
+    @Autowired
+    private TitoloDao titoloDao;
+
     @Test
-    public void getAllTest(){
+    public void getAllTitoloTest(){
         List<Titolo> titolos = titoloService.getAllTitolo();
         Assert.assertEquals(0, titolos.size());
     }
 
     @Test
-    public void getAllByEmittenteTest() {
+    public void getAllTitoloByEmittenteTest() {
         List<Titolo> titolos = titoloService.getAllByEmittente("John Doe");
         Assert.assertEquals(0, titolos.size());
     }
 
     @Test
-    public void getAllBymitBeforeDate() {
+    public void getAllTitoloBeforeDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2015);
         calendar.set(Calendar.MONTH, 3);
@@ -42,5 +47,13 @@ public class AllTests {
         Date date = calendar.getTime();
         List<Titolo> titolos = titoloService.getAllTitoloBeforeDate(date);
         Assert.assertEquals(0, titolos.size());
+    }
+
+    @Test
+    public void titoloSpecificationWithFilter(){
+        UnitSpecification.Filter filter = new UnitSpecification.Filter();
+        filter.setEmittente("Lolo");
+        //filter.setScadenza(new Date());
+        titoloDao.findAll(UnitSpecification.withFilter(filter)).stream().forEach(System.out::println);
     }
 }
