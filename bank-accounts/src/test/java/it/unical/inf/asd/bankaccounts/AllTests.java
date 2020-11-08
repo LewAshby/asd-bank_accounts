@@ -29,13 +29,13 @@ public class AllTests {
     @Test
     public void getAllTitoloTest(){
         List<Titolo> titolos = titoloService.getAllTitolo();
-        Assert.assertEquals(0, titolos.size());
+        Assert.assertEquals(1, titolos.size());
     }
 
     @Test
     public void getAllTitoloByEmittenteTest() {
         List<Titolo> titolos = titoloService.getAllByEmittente("John Doe");
-        Assert.assertEquals(0, titolos.size());
+        Assert.assertEquals(1, titolos.size());
     }
 
     @Test
@@ -52,8 +52,12 @@ public class AllTests {
     @Test
     public void titoloSpecificationWithFilter(){
         UnitSpecification.Filter filter = new UnitSpecification.Filter();
-        filter.setEmittente("Lolo");
+        //filter.setEmittente("John Doe");
         //filter.setScadenza(new Date());
+        filter.setDescrizione("una descripcion");
+        filter.setValoreNominale(23.0);
+        List<Titolo> titles = titoloDao.findAll(UnitSpecification.withFilter(filter));
+        System.out.println("List size: " + titles.size());
         titoloDao.findAll(UnitSpecification.withFilter(filter)).stream().forEach(System.out::println);
     }
 }

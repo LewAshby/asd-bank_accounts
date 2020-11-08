@@ -69,6 +69,10 @@ public class UnitSpecification {
                 LocalDate date = LocalDate.now().minus(calendar.get(Calendar.YEAR), ChronoUnit.YEARS);
                 predicates.add(criteriaBuilder.equal(root.get("scadenza"), date));
             }
+            if(filter.getValoreNominale()!=null)
+                predicates.add(criteriaBuilder.equal(root.get("valoreNominale"), filter.getValoreNominale()));
+            if(filter.getDescrizione()!=null)
+                predicates.add(criteriaBuilder.equal(root.get("descrizione"), filter.getDescrizione()));
 
             if(predicates.isEmpty())
                 predicates.add(criteriaBuilder.equal(root.get("id"), -1L));
